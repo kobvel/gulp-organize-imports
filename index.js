@@ -34,12 +34,39 @@ module.exports = function (options) {
 		// check if file.contents is a `Buffer`
 		if (file.isBuffer()) {
 			var regExps = [
-				"^import [',\"]{1}.*"
+				"^import ['\"]{1}.*",
+				"import ['\*]{1}.*",
+				".*angular.*",
+				"^.*"
 			];
 			var lines = String(file.contents).split('\n').filter(el => el !== '');
+			var result = [];
+			var imports = [];
 
-			var pureIpmorts = lines.filter(el => el.match(new RegExp(regExps[0])));
-			console.log(pureIpmorts);
+			regExps.forEach(el => {
+				if (result.length > 0) {
+					result.push('');
+				}
+
+				var regEx = new RegExp(el);
+				var importFrom = new RegExp("[\"'](.*?)[\"']");
+				var importWhat = new RegExp("[{}](.*?)[}]");
+
+				imports = lines
+					.filter(el => el.match(regEx))
+					.sort((x, y) => {
+						if (!x.match(importWhat)) {
+							console.log(x);
+							return 1;
+						}
+						return x.match(importWhat)[1] > y.match(importWhat)[1];
+					});
+				lines = lines.filter(el => !el.match(regEx));
+				result = result.concat(imports)
+			});
+
+			console.log(result);
+			// console.log(lines);
 			// manipulate buffer in some way
 			// http://nodejs.org/api/buffer.html
 			file.contents = new Buffer(String(file.contents));

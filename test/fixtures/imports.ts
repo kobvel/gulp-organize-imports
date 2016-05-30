@@ -1,7 +1,10 @@
-import "moment";
+import "Bmoment";
+import "Amoment";
 import * as ng from "angular/core";
-import {ISomeBInterface} from "angular";
-import {ISomeInterface} from "angular";
+import {IASomeInterface} from "angular";
+import {ICSomeInterface} from "angular";
+
+import {IBSomeInterface} from "angular";
 import {SomeClass} from "angular";
 
 import {MyPrivateClass} from "lsmodule";
