@@ -35,9 +35,9 @@ module.exports = function (options) {
 		if (file.isBuffer()) {
 			var regExps = [
 				"^import ['\"]{1}.*",
-				"import ['\*]{1}.*",
-				".*angular.*",
-				"^.*"
+				"^import ['\*]{1}.*",
+				"^import .*angular.*",
+				"^import [*{\"].*"
 			];
 			var lines = String(file.contents).split('\n').filter(el => el !== '');
 			var result = [];
@@ -56,7 +56,6 @@ module.exports = function (options) {
 					.filter(el => el.match(regEx))
 					.sort((x, y) => {
 						if (!x.match(importWhat)) {
-							console.log(x);
 							return 1;
 						}
 						return x.match(importWhat)[1] > y.match(importWhat)[1];
@@ -64,10 +63,10 @@ module.exports = function (options) {
 				lines = lines.filter(el => !el.match(regEx));
 				result = result.concat(imports)
 			});
-			
+			result.push('');
+			result = result.concat(lines);
 			result = result.join('\n');
-			// manipulate buffer in some way
-			// http://nodejs.org/api/buffer.html
+
 			file.contents = new Buffer(String(result));
 
 			this.push(file);

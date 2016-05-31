@@ -9,3 +9,8 @@ import {SomeClass} from "angular";
 
 import {MyPrivateClass} from "lsmodule";
 import {MyAClass, MyBClass} from "mymodule2/module";
+
+
+function newFunc(params) {
+    // some stuff
+}

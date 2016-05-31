@@ -10,3 +10,7 @@ import {SomeClass} from "angular";
 
 import {MyAClass, MyBClass} from "mymodule2/module";
 import {MyPrivateClass} from "lsmodule";
+
+function newFunc(params) {
+    // some stuff
+}
