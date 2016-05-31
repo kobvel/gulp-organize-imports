@@ -64,12 +64,11 @@ module.exports = function (options) {
 				lines = lines.filter(el => !el.match(regEx));
 				result = result.concat(imports)
 			});
-
-			console.log(result);
-			// console.log(lines);
+			
+			result = result.join('\n');
 			// manipulate buffer in some way
 			// http://nodejs.org/api/buffer.html
-			file.contents = new Buffer(String(file.contents));
+			file.contents = new Buffer(String(result));
 
 			this.push(file);
 
